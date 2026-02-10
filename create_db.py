@@ -1,5 +1,6 @@
 # create_db.py
-from sqlalchemy import create_engine, Column, Integer, Float, DateTime, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, Float, DateTime, ForeignKey, text
+
 from sqlalchemy.orm import declarative_base, relationship
 from datetime import datetime
 import os
