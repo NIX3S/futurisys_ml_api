@@ -44,5 +44,9 @@ jobs:
           cp -r ../tests .  # si tu as un modèle à inclure
           git add .
           git commit -m "Update Space via CI/CD" || echo "No changes to commit"
-          git remote set-url origin https://$HF_TOKEN@huggingface.co/spaces/nix3s/futurisys-ml-api
+          # Configurer le token comme credential helper
+          git config credential.helper store
+          echo "https://${HF_TOKEN}:@huggingface.co" > ~/.git-credentials
+
+          # Push
           git push origin main
