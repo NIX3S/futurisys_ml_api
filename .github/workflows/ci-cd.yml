@@ -93,7 +93,7 @@ jobs:
         run: |
           git config --global user.name "nix3s"
           git config --global user.email "paullesage59@gmail.com"
-          #change
+
           mkdir -p ~/.ssh
           echo -e "$HF_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
@@ -108,7 +108,7 @@ jobs:
           cp -r ../requirements.txt ./
           cp -r ../app ./
           cp -r ../tests ./
-	        #Ajout	
+
           git add .
           git commit -m "Update Space via CI/CD" || echo "No changes to commit"
           git push origin main
