@@ -1,0 +1,47 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: 
+      - main
+      - feature/*
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest --cov=app tests/
+
+      - name: Deploy to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.name "nix3s"
+          git config --global user.email "paullesage59@gmail.com"
+          git clone https://huggingface.co/spaces/nix3s/futurisys-ml-api hf-space
+          cd hf-space
+          # Copier tout ce qui est nécessaire
+          cp -r ../app.py .
+          cp -r ../requirements.txt .
+          cp -r ../app .
+          cp -r ../tests .  # si tu as un modèle à inclure
+          git add .
+          git commit -m "Update Space via CI/CD" || echo "No changes to commit"
+          git push https://$HF_TOKEN@huggingface.co/spaces/nix3s/futurisys-ml-api main
