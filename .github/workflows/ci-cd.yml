@@ -48,6 +48,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install sqlalchemy psycopg[binary]
+          pip install python-dotenv
 
       - name: Setup Database
         run: |
