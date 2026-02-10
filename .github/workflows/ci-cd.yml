@@ -46,7 +46,7 @@ jobs:
           ssh -T git@huggingface.co || true
 
           # Cloner le repo via SSH
-          git clone git@huggingface.co:nix3s/futurisys-ml-api.git hf-space
+          git clone git@huggingface.co:nix3s/futurisys_ml_api.git hf-space
           cd hf-space
 
           # Copier les fichiers nécessaires
