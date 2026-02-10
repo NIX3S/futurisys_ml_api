@@ -16,7 +16,12 @@ print("ENV PATH:", env_path)
 print("DB_USER:", os.getenv("DB_USER"))
 print("DB_PASSWORD:", os.getenv("DB_PASSWORD"))
 
-# Configuration PostgreSQL via variables d'environnement
+# Charge .env local seulement s'il existe
+env_path = Path(__file__).resolve().parent / ".env"
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path, override=True)
+
+# PostgreSQL config via env
 DB_USER = os.getenv("DB_USER", "postgres")
 DB_PASS = os.getenv("DB_PASSWORD", "password")
 DB_HOST = os.getenv("DB_HOST", "localhost")

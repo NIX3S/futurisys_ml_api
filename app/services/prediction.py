@@ -4,6 +4,7 @@ import pandas as pd
 from fastapi import HTTPException
 from pydantic import BaseModel
 from datetime import datetime
+from pathlib import Path
 
 # SQLAlchemy pour BDD
 from sqlalchemy import create_engine, Column, Integer, Float, DateTime, ForeignKey
@@ -15,6 +16,12 @@ load_dotenv(override=True)  # IMPORTANT
 # ----------------------------
 # CONFIG BDD POSTGRESQL LOCALE
 # ----------------------------
+# Charge .env local seulement s'il existe
+env_path = Path(__file__).resolve().parent / ".env"
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path, override=True)
+
+# PostgreSQL config via env
 DB_USER = os.getenv("DB_USER", "postgres")
 DB_PASS = os.getenv("DB_PASSWORD", "password")
 DB_HOST = os.getenv("DB_HOST", "localhost")
