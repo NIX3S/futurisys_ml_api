@@ -51,15 +51,29 @@ jobs:
           pip install python-dotenv
 
       - name: Setup Database
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: ${{ secrets.DB_NAME }}
+          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           echo "Waiting for PostgreSQL to be ready..."
           until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER; do
-            sleep 2
+               sleep 2
           done
-          # CRÉER LA DB avec createdb (fonctionne sur Linux)
-          createdb -h localhost -p 5432 -U ${{ secrets.DB_USER }} ${{ secrets.DB_NAME }}
-          echo "Database ${{ secrets.DB_NAME }} created!"
-          echo "PostgreSQL is ready. Creating tables..."
+
+          echo "Checking if database $DB_NAME exists..."
+          if ! psql -h $DB_HOST -p $DB_PORT -U $DB_USER -lqt | cut -d \| -f 1 | grep -qw $DB_NAME; then
+               echo "Database $DB_NAME does not exist. Creating..."
+               createdb -h $DB_HOST -p $DB_PORT -U $DB_USER $DB_NAME
+               echo "Database $DB_NAME created!"
+          else
+               echo "Database $DB_NAME already exists."
+          fi
+
+          echo "Creating tables..."
           python create_db.py
 
       - name: Run tests
