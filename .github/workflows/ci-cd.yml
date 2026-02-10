@@ -55,9 +55,9 @@ jobs:
           cp -r ../app .
           cp -r ../tests .
 
-    # Commit des changements
-    git add .
-    git commit -m "Update Space via CI/CD" || echo "No changes to commit"
+          # Commit des changements
+          git add .
+          git commit -m "Update Space via CI/CD" || echo "No changes to commit"
 
-    # Push via SSH
-    git push origin main
+          # Push via SSH
+          git push origin main
