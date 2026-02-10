@@ -40,13 +40,13 @@ jobs:
           mkdir -p ~/.ssh
           echo -e "$HF_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan huggingface.co >> ~/.ssh/known_hosts
+          ssh-keyscan hf.co >> ~/.ssh/known_hosts
 
           # Test SSH
-          ssh -T git@huggingface.co || true
+          ssh -T git@hf.co || true
 
           # Cloner le repo via SSH
-          git clone git@huggingface.co:nix3s/futurisys_ml_api.git hf-space
+          git clone git@hf.co:spaces/nix3s/futurisys_ml_api.git hf-space
           cd hf-space
 
           # Copier les fichiers nécessaires
