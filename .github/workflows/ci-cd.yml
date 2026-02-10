@@ -25,9 +25,29 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install sqlalchemy psycopg[binary]
+
+      - name: Setup Database
+        run: |
+          export DB_USER=postgres
+          export DB_PASSWORD=password
+          export DB_HOST=localhost
+          export DB_PORT=5432
+          export DB_NAME=futurisys_ml
+          export DATABASE_URL=postgresql+psycopg2://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME
+          
+          # Créer la base et les tables
+          python create_db.py
 
       - name: Run tests
-        run: pytest --cov=app tests/
+        run: |
+          export DB_USER=postgres
+          export DB_PASSWORD=password
+          export DB_HOST=localhost
+          export DB_PORT=5432
+          export DB_NAME=futurisys_ml
+          export DATABASE_URL=postgresql+psycopg2://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME
+          pytest --cov=app tests/
 
       - name: Deploy to Hugging Face via SSH
         env:
@@ -50,10 +70,10 @@ jobs:
           cd hf-space
 
           # Copier les fichiers nécessaires
-          cp -r ../app.py .
-          cp -r ../requirements.txt .
-          cp -r ../app .
-          cp -r ../tests .
+          cp -r ../app.py . 
+          cp -r ../requirements.txt . 
+          cp -r ../app . 
+          cp -r ../tests . 
 
           # Commit des changements
           git add .

@@ -1,0 +1,62 @@
+# create_db.py
+from sqlalchemy import create_engine, Column, Integer, Float, DateTime, ForeignKey
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from datetime import datetime
+
+# Configuration PostgreSQL (local)
+DB_USER = "postgres"
+DB_PASS = "password"
+DB_HOST = "localhost"
+DB_PORT = "5432"
+DB_NAME = "futurisys_ml"
+
+DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+Base = declarative_base()
+
+class MLInput(Base):
+    __tablename__ = "ml_inputs"
+
+    id = Column(Integer, primary_key=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    NumberofFloors = Column(Integer)
+    NumberofBuildings = Column(Float)
+    GFAPerFloor = Column(Float)
+    PropertyGFATotal = Column(Integer)
+    GFA_Prison_Incarceration = Column(Float)
+    GFA_College_University = Column(Float)
+    GFA_Office = Column(Float)
+    GFA_Parking = Column(Float)
+    GFA_Medical_Office = Column(Float)
+    GFA_Indoor_Arena = Column(Float)
+    GFA_Hospital_General_Medical_Surgical = Column(Float)
+    GFA_Data_Center = Column(Float)
+    GFA_Laboratory = Column(Float)
+    GFA_Supermarket_Grocery_Store = Column(Float)
+    GFA_Urgent_Care_Clinic_Other_Outpatient = Column(Float)
+    BuildingType_Nonresidential_WA = Column(Float)
+    ZipCode_infrequent_sklearn = Column(Float)
+    EPAPropertyType_infrequent_sklearn = Column(Float)
+
+    outputs = relationship("MLOutput", back_populates="input_row")
+
+
+class MLOutput(Base):
+    __tablename__ = "ml_outputs"
+
+    id = Column(Integer, primary_key=True)
+    input_id = Column(Integer, ForeignKey("ml_inputs.id"))
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    prediction = Column(Float)
+
+    input_row = relationship("MLInput", back_populates="outputs")
+
+
+def main():
+    engine = create_engine(DATABASE_URL, echo=True)
+    Base.metadata.create_all(engine)
+    print("Tables créées avec succès !")
+
+
+if __name__ == "__main__":
+    main()
