@@ -3,6 +3,18 @@ from sqlalchemy import create_engine, Column, Integer, Float, DateTime, ForeignK
 from sqlalchemy.orm import declarative_base, relationship
 from datetime import datetime
 import os
+from dotenv import load_dotenv
+import os
+from pathlib import Path
+
+# Charge .env depuis le dossier du script
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
+
+# Debug
+print("ENV PATH:", env_path)
+print("DB_USER:", os.getenv("DB_USER"))
+print("DB_PASSWORD:", os.getenv("DB_PASSWORD"))
 
 # Configuration PostgreSQL via variables d'environnement
 DB_USER = os.getenv("DB_USER", "postgres")
@@ -55,6 +67,8 @@ class MLOutput(Base):
 
 def main():
     print(f"Connecting to database at {DB_HOST}:{DB_PORT} with user {DB_USER}")
+    print(DB_USER, DB_PASS, DB_HOST, DB_PORT, DB_NAME)
+    print("Connecting with:", DATABASE_URL)
     engine = create_engine(DATABASE_URL, echo=True)
     Base.metadata.create_all(engine)
     print("Tables créées avec succès !")
