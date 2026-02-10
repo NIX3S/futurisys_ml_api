@@ -56,6 +56,9 @@ jobs:
           until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER; do
             sleep 2
           done
+          # CRÉER LA DB avec createdb (fonctionne sur Linux)
+          createdb -h localhost -p 5432 -U ${{ secrets.DB_USER }} ${{ secrets.DB_NAME }}
+          echo "Database ${{ secrets.DB_NAME }} created!"
           echo "PostgreSQL is ready. Creating tables..."
           python create_db.py
 
