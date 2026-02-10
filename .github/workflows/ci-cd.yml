@@ -9,6 +9,28 @@ on:
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: futurisys_ml
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: futurisys_ml
+      DATABASE_URL: postgresql+psycopg2://postgres:password@localhost:5432/futurisys_ml
 
     steps:
       - name: Checkout repository
@@ -29,24 +51,16 @@ jobs:
 
       - name: Setup Database
         run: |
-          export DB_USER=postgres
-          export DB_PASSWORD=password
-          export DB_HOST=localhost
-          export DB_PORT=5432
-          export DB_NAME=futurisys_ml
-          export DATABASE_URL=postgresql+psycopg2://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME
-          
-          # Créer la base et les tables
+          echo "Waiting for PostgreSQL to be ready..."
+          until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER; do
+            sleep 2
+          done
+          echo "PostgreSQL is ready. Creating tables..."
           python create_db.py
 
       - name: Run tests
         run: |
-          export DB_USER=postgres
-          export DB_PASSWORD=password
-          export DB_HOST=localhost
-          export DB_PORT=5432
-          export DB_NAME=futurisys_ml
-          export DATABASE_URL=postgresql+psycopg2://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME
+          echo "Running tests with database connection..."
           pytest --cov=app tests/
 
       - name: Deploy to Hugging Face via SSH
@@ -70,10 +84,10 @@ jobs:
           cd hf-space
 
           # Copier les fichiers nécessaires
-          cp -r ../app.py . 
-          cp -r ../requirements.txt . 
-          cp -r ../app . 
-          cp -r ../tests . 
+          cp -r ../app.py .
+          cp -r ../requirements.txt .
+          cp -r ../app .
+          cp -r ../tests .
 
           # Commit des changements
           git add .

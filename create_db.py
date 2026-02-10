@@ -1,14 +1,15 @@
 # create_db.py
 from sqlalchemy import create_engine, Column, Integer, Float, DateTime, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy.orm import declarative_base, relationship
 from datetime import datetime
+import os
 
-# Configuration PostgreSQL (local)
-DB_USER = "postgres"
-DB_PASS = "password"
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DB_NAME = "futurisys_ml"
+# Configuration PostgreSQL via variables d'environnement
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASS = os.getenv("DB_PASSWORD", "password")
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_NAME = os.getenv("DB_NAME", "futurisys_ml")
 
 DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
@@ -53,6 +54,7 @@ class MLOutput(Base):
 
 
 def main():
+    print(f"Connecting to database at {DB_HOST}:{DB_PORT} with user {DB_USER}")
     engine = create_engine(DATABASE_URL, echo=True)
     Base.metadata.create_all(engine)
     print("Tables créées avec succès !")
