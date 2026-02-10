@@ -29,19 +29,35 @@ jobs:
       - name: Run tests
         run: pytest --cov=app tests/
 
-      - name: Deploy to Hugging Face
+      - name: Deploy to Hugging Face via SSH
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SSH_KEY: ${{ secrets.HF_SSH_KEY }}
         run: |
           git config --global user.name "nix3s"
           git config --global user.email "paullesage59@gmail.com"
-          git clone https://huggingface.co/spaces/nix3s/futurisys-ml-api hf-space
+
+          # Configurer SSH
+          mkdir -p ~/.ssh
+          echo -e "$HF_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan huggingface.co >> ~/.ssh/known_hosts
+
+          # Test SSH
+          ssh -T git@huggingface.co || true
+
+          # Cloner le repo via SSH
+          git clone git@huggingface.co:nix3s/futurisys-ml-api.git hf-space
           cd hf-space
-          # Copier tout ce qui est nécessaire
+
+          # Copier les fichiers nécessaires
           cp -r ../app.py .
           cp -r ../requirements.txt .
           cp -r ../app .
-          cp -r ../tests .  # si tu as un modèle à inclure
-          git add .
-          git commit -m "Update Space via CI/CD" || echo "No changes to commit"
-          git push https://$HF_TOKEN@huggingface.co/spaces/nix3s/futurisys-ml-api main
+          cp -r ../tests .
+
+    # Commit des changements
+    git add .
+    git commit -m "Update Space via CI/CD" || echo "No changes to commit"
+
+    # Push via SSH
+    git push origin main
