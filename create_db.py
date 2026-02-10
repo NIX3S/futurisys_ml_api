@@ -9,7 +9,8 @@ from pathlib import Path
 
 # Charge .env depuis le dossier du script
 env_path = Path(__file__).resolve().parent / ".env"
-load_dotenv(dotenv_path=env_path, override=True)
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path, override=True)
 
 # Debug
 print("ENV PATH:", env_path)
@@ -71,10 +72,24 @@ class MLOutput(Base):
 
 
 def main():
-    print(f"Connecting to database at {DB_HOST}:{DB_PORT} with user {DB_USER}")
-    print(DB_USER, DB_PASS, DB_HOST, DB_PORT, DB_NAME)
-    print("Connecting with:", DATABASE_URL)
-    engine = create_engine(DATABASE_URL, echo=True)
+    print(f"Connecting to PostgreSQL server at {DB_HOST}:{DB_PORT} as {DB_USER}")
+
+    # Connexion à la DB par défaut "postgres" pour créer la DB si nécessaire
+    engine_default = create_engine(f"postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/postgres")
+    with engine_default.connect() as conn:
+        conn.execute(text("COMMIT"))  # nécessaire pour CREATE DATABASE
+        result = conn.execute(text(f"SELECT 1 FROM pg_database WHERE datname='{DB_NAME}'"))
+        exists = result.scalar() is not None
+        if not exists:
+            print(f"Database '{DB_NAME}' does not exist. Creating...")
+            conn.execute(text(f'CREATE DATABASE "{DB_NAME}"'))
+            print(f"Database '{DB_NAME}' created!")
+        else:
+            print(f"Database '{DB_NAME}' already exists.")
+
+    # Connexion à la vraie DB pour créer les tables
+    DATABASE_URL_REAL = f"postgresql+psycopg2://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    engine = create_engine(DATABASE_URL_REAL, echo=True)
     Base.metadata.create_all(engine)
     print("Tables créées avec succès !")
 

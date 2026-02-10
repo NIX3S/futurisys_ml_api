@@ -11,7 +11,7 @@ from sqlalchemy import create_engine, Column, Integer, Float, DateTime, ForeignK
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 from dotenv import load_dotenv
 
-load_dotenv(override=True)  # IMPORTANT
+#load_dotenv(override=True)  # IMPORTANT
 
 # ----------------------------
 # CONFIG BDD POSTGRESQL LOCALE
