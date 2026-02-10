@@ -57,13 +57,24 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 5432
           DB_NAME: ${{ secrets.DB_NAME }}
-          DATABASE_URL: postgresql+psycopg2://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@localhost:5432/${{ secrets.DB_NAME }}
         run: |
           echo "Waiting for PostgreSQL to be ready..."
           until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER; do
                sleep 2
           done
-          echo "PostgreSQL is ready. Creating tables..."
+          echo "PostgreSQL is ready."
+
+          # Vérifier si la DB existe déjà
+          if ! psql -h $DB_HOST -p $DB_PORT -U $DB_USER -lqt | cut -d \| -f 1 | grep -qw $DB_NAME; then
+               echo "Database $DB_NAME does not exist. Creating..."
+               createdb -h $DB_HOST -p $DB_PORT -U $DB_USER $DB_NAME
+               echo "Database $DB_NAME created!"
+          else
+               echo "Database $DB_NAME already exists."
+          fi
+
+          # Créer les tables via SQLAlchemy
+          DATABASE_URL="postgresql+psycopg2://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
           python create_db.py
 
       - name: Run tests
