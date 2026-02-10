@@ -33,15 +33,17 @@ jobs:
         env:
           HF_SSH_KEY: ${{ secrets.HF_SSH_KEY }}
         run: |
-          # Configurer l'utilisateur Git
           git config --global user.name "nix3s"
           git config --global user.email "paullesage59@gmail.com"
 
           # Configurer SSH
           mkdir -p ~/.ssh
-          echo "$HF_SSH_KEY" > ~/.ssh/id_ed25519
+          echo -e "$HF_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan huggingface.co >> ~/.ssh/known_hosts
+
+          # Test SSH
+          ssh -T git@huggingface.co || true
 
           # Cloner le repo via SSH
           git clone git@huggingface.co:nix3s/futurisys-ml-api.git hf-space
@@ -53,9 +55,9 @@ jobs:
           cp -r ../app .
           cp -r ../tests .
 
-          # Commit des changements
-          git add .
-          git commit -m "Update Space via CI/CD" || echo "No changes to commit"
+    # Commit des changements
+    git add .
+    git commit -m "Update Space via CI/CD" || echo "No changes to commit"
 
-          # Push via SSH
-          git push origin main
+    # Push via SSH
+    git push origin main
