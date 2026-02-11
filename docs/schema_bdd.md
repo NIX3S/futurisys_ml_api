@@ -20,33 +20,33 @@ float GFAPerFloor
 
 int PropertyGFATotal
 
-float GFA\_Prison\_Incarceration
+float GFA_Prison_Incarceration
 
-float GFA\_College\_University
+float GFA_College_University
 
-float GFA\_Office
+float GFA_Office
 
-float GFA\_Parking
+float GFA_Parking
 
-float GFA\_Medical\_Office
+float GFA_Medical_Office
 
-float GFA\_Indoor\_Arena
+float GFA_Indoor_Arena
 
-float GFA\_Hospital\_General\_Medical\_Surgical
+float GFA_Hospital_General_Medical_Surgical
 
-float GFA\_Data\_Center
+float GFA_Data_Center
 
-float GFA\_Laboratory
+float GFA_Laboratory
 
-float GFA\_Supermarket\_Grocery\_Store
+float GFA_Supermarket_Grocery_Store
 
-float GFA\_Urgent\_Care\_Clinic\_Other\_Outpatient
+float GFA_Urgent_Care_Clinic_Other_Outpatient
 
-float BuildingType\_Nonresidential\_WA
+float BuildingType_Nonresidential_WA
 
-float ZipCode\_infrequent\_sklearn
+float ZipCode_infrequent_sklearn
 
-float EPAPropertyType\_infrequent\_sklearn
+float EPAPropertyType_infrequent_sklearn
 
 }
 
@@ -56,7 +56,7 @@ MLOutput {
 
 int id
 
-int input\_id
+int input_id
 
 datetime timestamp
 
