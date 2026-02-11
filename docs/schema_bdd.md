@@ -8,9 +8,9 @@ erDiagram
 
 &nbsp;   MLInput {
 
-&nbsp;       int id PK "Clé primaire"
+&nbsp;       int id
 
-&nbsp;       datetime timestamp "Date et heure de l'insertion"
+&nbsp;       datetime timestamp
 
 &nbsp;       int NumberofFloors
 
@@ -54,19 +54,17 @@ erDiagram
 
 &nbsp;   MLOutput {
 
-&nbsp;       int id PK "Clé primaire"
+&nbsp;       int id
 
-&nbsp;       int input\_id FK "Référence à MLInput.id"
+&nbsp;       int input\_id
 
-&nbsp;       datetime timestamp "Date et heure de la prédiction"
+&nbsp;       datetime timestamp
 
-&nbsp;       float prediction "Valeur prédite par le modèle"
+&nbsp;       float prediction
 
 &nbsp;   }
 
 
 
-&nbsp;   MLInput ||--o{ MLOutput : "produit"
-
-
+&nbsp;   MLInput ||--o{ MLOutput : has
 
