@@ -37,4 +37,5 @@ def make_prediction(data: InputData):
         raise HTTPException(status_code=422, detail=str(ve))
     except Exception as e:
         # Autres erreurs inattendues
+        #return {"error": str(e)}
         raise HTTPException(status_code=500, detail="Erreur interne du serveur")

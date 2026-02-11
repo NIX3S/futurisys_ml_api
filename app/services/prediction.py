@@ -5,19 +5,20 @@ from fastapi import HTTPException
 from pydantic import BaseModel
 from datetime import datetime
 from pathlib import Path
-
+#from app.database import SessionLocal
 # SQLAlchemy pour BDD
 from sqlalchemy import create_engine, Column, Integer, Float, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 from dotenv import load_dotenv
-
+import numpy as np
 #load_dotenv(override=True)  # IMPORTANT
 
 # ----------------------------
 # CONFIG BDD POSTGRESQL LOCALE
 # ----------------------------
 # Charge .env local seulement s'il existe
-env_path = Path(__file__).resolve().parent / ".env"
+env_path = Path(__file__).resolve().parent.parent.parent / ".env"
+print(env_path)
 if env_path.exists():
     load_dotenv(dotenv_path=env_path, override=True)
 
@@ -110,6 +111,7 @@ class InputData(BaseModel):
 # PREDICT + ENREGISTREMENT BDD
 # ----------------------------
 def predict(data: InputData) -> float:
+    #session = SessionLocal()
     data_dict = data.model_dump()
 
     # Insert input dans BDD
@@ -150,7 +152,9 @@ def predict(data: InputData) -> float:
             X_row.append(value)
 
         X = pd.DataFrame([X_row], columns=columns)
-        pred_value = float(model.predict(X)[0])
+        #pred_value = float(model.predict(X)[0])
+        raw_pred = model.predict(X)[0]
+        pred_value = float(np.expm1(raw_pred))
 
     # Insert output dans BDD
     output_row = MLOutput(input_id=input_row.id, prediction=pred_value)
