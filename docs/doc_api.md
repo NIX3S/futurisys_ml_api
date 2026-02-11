@@ -84,41 +84,41 @@ La réponse renvoie la valeur prédite sous forme d’un `float`.
 
 {
 
-&nbsp; "NumberofFloors": 1,
+"NumberofFloors": 1,
 
-&nbsp; "NumberofBuildings": 1,
+"NumberofBuildings": 1,
 
-&nbsp; "GFAPerFloor": 100,
+"GFAPerFloor": 100,
 
-&nbsp; "PropertyGFATotal": 1000,
+"PropertyGFATotal": 1000,
 
-&nbsp; "GFA\_Prison\_Incarceration": 0,
+"GFA\_Prison\_Incarceration": 0,
 
-&nbsp; "GFA\_College\_University": 0,
+"GFA\_College\_University": 0,
 
-&nbsp; "GFA\_Office": 0,
+"GFA\_Office": 0,
 
-&nbsp; "GFA\_Parking": 0,
+"GFA\_Parking": 0,
 
-&nbsp; "GFA\_Medical\_Office": 0,
+"GFA\_Medical\_Office": 0,
 
-&nbsp; "GFA\_Indoor\_Arena": 0,
+"GFA\_Indoor\_Arena": 0,
 
-&nbsp; "GFA\_Hospital\_General\_Medical\_Surgical": 0,
+"GFA\_Hospital\_General\_Medical\_Surgical": 0,
 
-&nbsp; "GFA\_Data\_Center": 0,
+"GFA\_Data\_Center": 0,
 
-&nbsp; "GFA\_Laboratory": 0,
+"GFA\_Laboratory": 0,
 
-&nbsp; "GFA\_Supermarket\_Grocery\_Store": 0,
+"GFA\_Supermarket\_Grocery\_Store": 0,
 
-&nbsp; "GFA\_Urgent\_Care\_Clinic\_Other\_Outpatient": 0,
+"GFA\_Urgent\_Care\_Clinic\_Other\_Outpatient": 0,
 
-&nbsp; "BuildingType\_Nonresidential\_WA": 0,
+"BuildingType\_Nonresidential\_WA": 0,
 
-&nbsp; "ZipCode\_infrequent\_sklearn": 0,
+"ZipCode\_infrequent\_sklearn": 0,
 
-&nbsp; "EPAPropertyType\_infrequent\_sklearn": 0
+"EPAPropertyType\_infrequent\_sklearn": 0
 
 }
 
