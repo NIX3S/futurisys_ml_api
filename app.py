@@ -10,7 +10,7 @@ def gradio_predict(**kwargs):
     input_data = InputData(**kwargs)
     return predict(input_data)
 
-# Créer les inputs Gradio selon ton modèle
+# Créer les inputs Gradio selon modèle
 inputs = [
     gr.Number(label="NumberofFloors"),
     gr.Number(label="NumberofBuildings"),
