@@ -3,9 +3,11 @@
 
 API FastAPI connectée à PostgreSQL intégrant un modèle Machine Learning, avec pipeline CI/CD et déploiement automatique vers Hugging Face Spaces.
 
+Ce projet permet de prédire la consommation énergétique de bâtiments à Seattle via une API REST.
+
 ---
 
-## 📚 Table of Contents
+##  Table of Contents
 
 - [About The Project](#about-the-project)
 - [Project Structure](#project-structure)
@@ -26,18 +28,18 @@ API FastAPI connectée à PostgreSQL intégrant un modèle Machine Learning, ave
 
 ---
 
-## 🚀 About The Project
+##  About The Project
 
 FuturiSys ML API est une API développée avec **FastAPI**, connectée à une base **PostgreSQL**, intégrant un modèle Machine Learning pour effectuer des prédictions sur la consommation énergétique de bâtiments à Seattle.
 
-Le projet inclut :
+Fonctionnalités clés :
 
 - Initialisation automatique de la base via SQLAlchemy  
 - Tests automatisés avec Pytest  
 - Couverture de code  
 - Pipeline CI/CD GitHub Actions  
 - Déploiement automatique vers Hugging Face Spaces  
-- Chargement d’un modèle `.joblib`
+- Chargement d’un modèle `.joblib` pour les prédictions
 
 ---
 
@@ -55,20 +57,18 @@ Le projet inclut :
 │   │   └── model.joblib
 │   └── services/
 │       └── prediction.py
-│
 ├── tests/
 │   ├── test_api.py
 │   ├── test_endpoint.py
 │   ├── test_predict.py
 │   └── test_prediction.py
-│
 ├── create_db.py
 ├── requirements.txt
 └── .github/workflows/ci.yml
 
 ```
 
-### 🔹 Modèle Machine Learning
+###  Modèle Machine Learning
 
 Le modèle est stocké localement dans :
 
@@ -78,13 +78,12 @@ app/models/model.joblib
 
 ````
 
-Si absent, il peut être récupéré depuis Hugging Face :
-
-https://huggingface.co/nix3s/futurisys_ml_model
+Si absent, il peut être récupéré depuis Hugging Face :  
+[https://huggingface.co/nix3s/futurisys_ml_model](https://huggingface.co/nix3s/futurisys_ml_model)
 
 ---
 
-## 🛠 Built With
+##  Built With
 
 - Python 3.11  
 - FastAPI  
@@ -98,7 +97,7 @@ https://huggingface.co/nix3s/futurisys_ml_model
 
 ---
 
-## ⚙ CI/CD Pipeline
+##  CI/CD Pipeline
 
 Le pipeline GitHub Actions se déclenche sur :
 
@@ -117,9 +116,9 @@ Le pipeline GitHub Actions se déclenche sur :
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
-### 📌 Prerequisites
+###  Prerequisites
 
 - Python 3.11  
 - PostgreSQL  
@@ -133,7 +132,7 @@ python -m pip install --upgrade pip
 
 ---
 
-### 📦 Installation
+###  Installation
 
 1. Cloner le repository
 
@@ -160,8 +159,7 @@ createdb -U postgres futurisys_db
 
 Ou via psql :
 
-```bash
-psql -U postgres
+```sql
 CREATE DATABASE futurisys_db;
 ```
 
@@ -173,11 +171,11 @@ python create_db.py
 
 ---
 
-## 🔐 Environment Variables
+##  Environment Variables
 
-Créer un fichier `.env` :
+Créer un fichier `.env` à la racine du projet :
 
-```
+```env
 DB_USER=your_user
 DB_PASSWORD=your_password
 DB_HOST=localhost
@@ -188,7 +186,7 @@ DATABASE_URL=postgresql+psycopg2://your_user:your_password@localhost:5432/futuri
 
 ---
 
-## ▶ Usage
+##  Usage
 
 Lancer le serveur FastAPI :
 
@@ -202,7 +200,7 @@ API disponible sur :
 http://127.0.0.1:8000
 ```
 
-Documentation interactive :
+Documentation interactive Swagger :
 
 ```
 http://127.0.0.1:8000/docs
@@ -210,9 +208,9 @@ http://127.0.0.1:8000/docs
 
 ---
 
-## 🧪 Testing
+##  Testing
 
-Lancer les tests :
+Exécuter les tests :
 
 ```bash
 pytest --cov=app tests/
@@ -227,18 +225,19 @@ Les tests couvrent :
 
 ---
 
-## 🚀 Deployment
+##  Deployment
 
-Le déploiement vers Hugging Face est automatique via GitHub Actions.
+Le déploiement vers Hugging Face Spaces est automatique via GitHub Actions.
 
-Processus :
+Étapes principales :
 
 1. Connexion SSH via `HF_SSH_KEY`
 2. Clone du Space :
 
-   ```
-   git@hf.co:spaces/nix3s/futurisys_ml_api.git
-   ```
+```bash
+git@hf.co:spaces/nix3s/futurisys_ml_api.git
+```
+
 3. Copie des fichiers
 4. Commit automatique
 5. Push vers `main`
@@ -256,7 +255,7 @@ Chaque push validé déclenche une mise à jour du Space.
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 ```bash
 git checkout -b feature/AmazingFeature
@@ -264,23 +263,23 @@ git commit -m "Add AmazingFeature"
 git push origin feature/AmazingFeature
 ```
 
-Ouvrir ensuite une Pull Request.
+Ouvrir ensuite une Pull Request sur GitHub.
 
 ---
 
-## 📄 License
+##  License
 
-Distributed under the MIT License.
+Distribué sous licence MIT.
 
 ---
 
-## 📬 Contact
+##  Contact
 
 Paul Lesage
 GitHub: [https://github.com/nix3s](https://github.com/nix3s)
-
-Project Link:
-[https://github.com/nix3s/futurisys_ml_api](https://github.com/nix3s/futurisys_ml_api)
+Project Link: [https://github.com/nix3s/futurisys_ml_api](https://github.com/nix3s/futurisys_ml_api)
 
 ```
 
+Si tu veux, je peux te préparer **la version Markdown du README RAG** aussi avec toutes les corrections similaires, prête à push. Veux‑tu que je fasse ça ?
+```
