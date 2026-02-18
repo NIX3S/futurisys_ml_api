@@ -1,4 +1,3 @@
-```markdown
 # FuturiSys ML API
 
 API FastAPI connectée à PostgreSQL intégrant un modèle Machine Learning, avec pipeline CI/CD et déploiement automatique vers Hugging Face Spaces.
@@ -276,4 +275,4 @@ Paul Lesage
 GitHub: [https://github.com/nix3s](https://github.com/nix3s)
 Project Link: [https://github.com/nix3s/futurisys_ml_api](https://github.com/nix3s/futurisys_ml_api)
 
-```
+---
