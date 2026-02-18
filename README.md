@@ -46,8 +46,6 @@ Fonctionnalités clés :
 ## 🏗 Project Structure
 
 ```
-
-.
 ├── app/
 │   ├── main.py
 │   ├── exceptions.py
@@ -65,7 +63,6 @@ Fonctionnalités clés :
 ├── create_db.py
 ├── requirements.txt
 └── .github/workflows/ci.yml
-
 ```
 
 ###  Modèle Machine Learning
