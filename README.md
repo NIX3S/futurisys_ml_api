@@ -280,6 +280,3 @@ GitHub: [https://github.com/nix3s](https://github.com/nix3s)
 Project Link: [https://github.com/nix3s/futurisys_ml_api](https://github.com/nix3s/futurisys_ml_api)
 
 ```
-
-Si tu veux, je peux te préparer **la version Markdown du README RAG** aussi avec toutes les corrections similaires, prête à push. Veux‑tu que je fasse ça ?
-```
