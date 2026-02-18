@@ -42,7 +42,7 @@ Fonctionnalités clés :
 
 ---
 
-## 🏗 Project Structure
+##  Project Structure
 
 ```
 ├── app/
@@ -145,7 +145,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🗄 Database Creation
+##  Database Creation
 
 Créer la base PostgreSQL si elle n’existe pas :
 
@@ -242,7 +242,7 @@ Chaque push validé déclenche une mise à jour du Space.
 
 ---
 
-## 🛣 Roadmap
+##  Roadmap
 
 * Dockerisation complète
 * Monitoring
