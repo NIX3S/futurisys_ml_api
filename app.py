@@ -1,16 +1,30 @@
 import gradio as gr
-from app.services.predictions import predict
+from app.services.prediction import predict
 from app.api.endpoints import InputData
 
 # Fonction d'adaptation pour Gradio
-def gradio_predict(**kwargs):
-    """
-    Gradio envoie un dict kwargs → on le convertit en InputData pour predict()
-    """
-    input_data = InputData(**kwargs)
-    return predict(input_data)
+def gradio_predict(*args):
+    columns = [
+        "NumberofFloors", "NumberofBuildings", "GFAPerFloor", "PropertyGFATotal",
+        "GFA_Prison_Incarceration", "GFA_College_University", "GFA_Office",
+        "GFA_Parking", "GFA_Medical_Office", "GFA_Indoor_Arena",
+        "GFA_Hospital_General_Medical_Surgical", "GFA_Data_Center",
+        "GFA_Laboratory", "GFA_Supermarket_Grocery_Store",
+        "GFA_Urgent_Care_Clinic_Other_Outpatient",
+        "BuildingType_Nonresidential_WA", "ZipCode_infrequent_sklearn",
+        "EPAPropertyType_infrequent_sklearn"
+    ]
+    # Convertir le tuple en dict
+    data_dict = dict(zip(columns, args))
+    
+    # Créer l'objet Pydantic
+    data = InputData(**data_dict)
+    
+    # Prédiction
+    prediction = predict(data)
+    return prediction
 
-# Créer les inputs Gradio selon modèle
+# Créer les inputs Gradio selon ton modèle
 inputs = [
     gr.Number(label="NumberofFloors"),
     gr.Number(label="NumberofBuildings"),
